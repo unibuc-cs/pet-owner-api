@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dragh\\source\\repos\\PetOwner\\PetOwner.csproj": {}
+    "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\PetOwner.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dragh\\source\\repos\\PetOwner\\PetOwner.csproj": {
+    "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\PetOwner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dragh\\source\\repos\\PetOwner\\PetOwner.csproj",
+        "projectUniqueName": "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\PetOwner.csproj",
         "projectName": "PetOwner",
-        "projectPath": "C:\\Users\\dragh\\source\\repos\\PetOwner\\PetOwner.csproj",
+        "projectPath": "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\PetOwner.csproj",
         "packagesPath": "C:\\Users\\dragh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dragh\\source\\repos\\PetOwner\\obj\\",
+        "outputPath": "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6VLXKl+X8aeH34CjdwaRehIIhmzRYWp9+KsTsbSqDZ/P/n04JT8mE+3vVu7FrhaJG6CYK9QfriQ2++bvyB+YiQ==",
+  "dgSpecHash": "X6DU2DJYXzyTQxEXokS7Ru7fJBMtqViN2TCSpm/Vp2lCSrk635ByVdqQaeqnSwwInugY4MmUxH7Rwi9lsRfabw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dragh\\source\\repos\\PetOwner\\PetOwner.csproj",
+  "projectFilePath": "C:\\Users\\dragh\\Documents\\GitHub\\pet-owner-api\\PetOwner.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
