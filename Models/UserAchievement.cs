@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetOwner.Models
 {
-	public class UserAchievements
+	public class UserAchievement
 	{
 		public int UserId { get; set; }
 		public int AchievementId { get; set; }

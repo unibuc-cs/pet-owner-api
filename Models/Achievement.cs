@@ -34,7 +34,7 @@ namespace PetOwner.Models
 		public int AchievementId { get; set; }
 		public string Description { get; set; }
 		public int ExpPoints { get; set; }
-		public ICollection<UserAchievements> userAchievements { get; set; }
+		public ICollection<UserAchievement> userAchievements { get; set; }
 
 	}
 }

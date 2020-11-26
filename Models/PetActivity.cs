@@ -12,8 +12,8 @@ namespace PetOwner.Models
 		public DateTime Data { get; set; }
 		public bool Recurring { get; set; }
 		public int RecurringInterval { get; set; }
-		public virtual Pet Pets { get; set; }
-		public virtual Activity Activities { get; set; }
+		public virtual Pet Pet { get; set; }
+		public virtual Activity Activity { get; set; }
 
 	}
 }

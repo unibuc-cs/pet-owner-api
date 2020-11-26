@@ -21,7 +21,7 @@ namespace PetOwner.Models
 		public virtual Vip Vip { get; set; }
 		public virtual Gamification Level { get; set; }
 		public virtual Group Group { get; set; }
-		public ICollection<UserAchievements> UserAchievements { get; set; }
+		public ICollection<UserAchievement> UserAchievements { get; set; }
 
 	}
 }
