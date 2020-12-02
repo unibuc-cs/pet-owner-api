@@ -1,25 +1,4 @@
 ﻿
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,7 +13,7 @@ namespace PetOwner.Models
 		public int AchievementId { get; set; }
 		public string Description { get; set; }
 		public int ExpPoints { get; set; }
-		public ICollection<UserAchievement> userAchievements { get; set; }
+		public ICollection<UserAchievement> UserAchievements { get; set; }
 
 	}
 }

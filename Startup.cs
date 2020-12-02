@@ -31,12 +31,11 @@ namespace PetOwner
 		{
 			services.AddControllers();
 
-			services.AddDbContext<PetOwnerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Defaul")));
+			services.AddDbContext<PetOwnerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			services.AddTransient<IAchievementRepository, AchievementRepository>();
 			services.AddTransient<IActivityRepository, ActivityRepository>();
-			services.AddTransient<ICostRepository, CostRepository>();
 			services.AddTransient<IGamificationRepository, GamificationRepository>();
 			services.AddTransient<IGroupRepository, GroupRepository>();
 			services.AddTransient<IItemRepository, ItemRepository>();

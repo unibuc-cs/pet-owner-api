@@ -11,7 +11,6 @@ namespace PetOwner.Data
 	{
 		public DbSet<Achievement> Achievements;
 		public DbSet<Activity> Activities;
-		public DbSet<Cost> Costs;
 		public DbSet<Gamification> Gamifications;
 		public DbSet<Group> Groups;
 		public DbSet<Item> Items;
@@ -39,7 +38,7 @@ namespace PetOwner.Data
 				.HasForeignKey(x => x.UserId);
 
 				entity.HasOne(x => x.Achievement)
-				.WithMany(y => y.userAchievements)
+				.WithMany(y => y.UserAchievements)
 				.HasForeignKey(x => x.AchievementId);
 
 			});
@@ -63,15 +62,10 @@ namespace PetOwner.Data
 				.WithMany(y => y.Pets)
 				.HasForeignKey(x => x.GroupId);
 
-			builder.Entity<Cost>()
-				.HasMany(x => x.Items)
-				.WithOne(y => y.Cost)
-				.HasForeignKey(y => y.CostId);
-
 			builder.Entity<Group>()
-				.HasOne(x => x.Cost)
+				.HasMany(x => x.Items)
 				.WithOne(y => y.Group)
-				.HasForeignKey<Cost>(y => y.GroupId);
+				.HasForeignKey(y => y.GroupId);
 
 			builder.Entity<User>(entity =>
 			{

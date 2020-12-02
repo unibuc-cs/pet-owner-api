@@ -11,7 +11,7 @@ namespace PetOwner.Repository.Implementations
 	public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
 		protected readonly PetOwnerContext _context;
-		private readonly DbSet<T> _table;
+		protected readonly DbSet<T> _table;
 
 		public GenericRepository(PetOwnerContext context)
 		{

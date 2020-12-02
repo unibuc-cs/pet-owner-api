@@ -12,7 +12,7 @@ namespace PetOwner.Models
 		public int GroupId { get; set; }
 		public string InviteCode { get; set; }
 		public string GroupName { get; set; }
-		public virtual Cost Cost { get; set; }
+		public ICollection<Item> Items { get; set; }
 		public ICollection<User> Users { get; set; }
 		public ICollection<Pet> Pets { get; set; }
 	}
