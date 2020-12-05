@@ -10,6 +10,7 @@ namespace PetOwner.Models
 	{
 		[Key]
 		public int VipId { get; set; }
+		//public int UserId { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public Decimal ExpMultiplier { get; set; }

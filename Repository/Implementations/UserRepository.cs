@@ -1,4 +1,5 @@
-﻿using PetOwner.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PetOwner.Data;
 using PetOwner.DTOs;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
@@ -21,11 +22,34 @@ namespace PetOwner.Repository.Implementations
 			return _table.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
 		}
 
+		public User GetUserByEmail(string email)
+		{
+			return _table.Where(x => x.Email == email).FirstOrDefault();
+		}
+
+		public User GetUserWithLevelVip(int id)
+		{
+			User user = _context.Users.Include(x => x.Vip)
+				.Include(x => x.Level)
+				.Where(x => x.UserId == id)
+				.FirstOrDefault();
+
+			return user;
+		}
+
 		public User Login(UserLoginRequest userLogin)
 		{
 			var user = this.GetByEmailAndPassword(userLogin.Email, userLogin.Password);
 
 			return user;
+		}
+
+		public void InsertUserLevelGroup(User userCreate)
+		{
+			var join = _context.Users.Include(x => x.Level)
+				.Include(y => y.Group).FirstOrDefault();
+
+	
 		}
 	}
 }

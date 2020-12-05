@@ -14,6 +14,7 @@ namespace PetOwner.Models
 		public int WeeklyExp { get; set; }
 		public string LevelName { get; set; }
 		public int Tokens { get; set; }
+		//public int UserId { get; set; }
 		public virtual User User { get; set; }
 	}
 }

@@ -11,13 +11,13 @@ namespace PetOwner.Data
 	{
 		public DbSet<Achievement> Achievements;
 		public DbSet<Activity> Activities;
-		public DbSet<Gamification> Gamifications;
-		public DbSet<Group> Groups;
+		public DbSet<Gamification> Gamifications { get; set; }
+		public DbSet<Group> Groups { get; set; }
 		public DbSet<Item> Items;
 		public DbSet<Pet> Pets;
 		public DbSet<PetActivity> PetActivities;
 		public DbSet<Tip> Tips;
-		public DbSet<User> Users;
+		public DbSet<User> Users { get; set; }
 		public DbSet<UserAchievement> UserAchievements;
 		public DbSet<Vip> Vips;
 
@@ -25,10 +25,14 @@ namespace PetOwner.Data
 		{
 
 		}
+		public PetOwnerContext()
+		{
+			
+		}
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-
+			
 			builder.Entity<UserAchievement>(entity =>
 			{
 				entity.HasKey(x => new { x.UserId, x.AchievementId });
@@ -81,10 +85,16 @@ namespace PetOwner.Data
 				.WithOne(y => y.User)
 				.HasForeignKey<User>(x => x.LevelId);
 
+				entity.HasKey(x => x.UserId);
+				
+
+				//entity.Property(x => x.UserId).HasAnnotation("SqlServer:Identity", "1, 1");
+
 			});
 
 			base.OnModelCreating(builder);
 		}
+
 
 	}
 }

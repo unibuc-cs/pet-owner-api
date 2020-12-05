@@ -13,5 +13,8 @@ namespace PetOwner.Repository.Interfaces
 	{
 		User Login(UserLoginRequest userLogin);
 		User GetByEmailAndPassword(string username, string password);
+		User GetUserWithLevelVip(int id);
+
+		User GetUserByEmail(string email);
 	}
 }
