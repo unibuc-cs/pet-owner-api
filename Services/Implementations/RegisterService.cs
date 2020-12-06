@@ -57,9 +57,13 @@ namespace PetOwner.Services.Implementations
 
 			};
 
-			_context.Users.Add(userCreate);
-			_context.Groups.Add(defaultGroup);
-			_context.Gamifications.Add(gamification);
+			//_context.Users.Add(userCreate);
+			//_context.Groups.Add(defaultGroup);
+			//_context.Gamifications.Add(gamification);
+			_userRepository.Insert(userCreate);
+			_groupRepository.Insert(defaultGroup);
+			_gamificationRepository.Insert(gamification);
+
 
 			if (_context.SaveChanges() > 0)
 				return true;

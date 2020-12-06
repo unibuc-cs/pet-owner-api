@@ -7,25 +7,19 @@ using System.Threading.Tasks;
 
 namespace PetOwner.Mappers
 {
-	public static class ToUserHomeRequest
+	public static class ToUserProfile
 	{
-		public static UserHomeResponse ToUserHome(this User user)
+		public static UserProfileDTO ToProfile(this User user)
 		{
-			var userHome = new UserHomeResponse
+			return new UserProfileDTO
 			{
 				Name = user.Name,
 				Photo = user.Photo,
-				Level = user.Level.Experience,
 				Tokens = user.Level.Tokens,
-
+				Level = user.Level.Experience,
+				Vip = user.Vip,
 			};
-
-			if(user.Vip != null)
-			{
-				userHome.VipEndDate = user.Vip.EndDate;
-			}
-
-			return userHome;
 		}
+
 	}
 }

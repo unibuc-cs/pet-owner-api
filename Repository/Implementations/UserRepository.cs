@@ -12,9 +12,10 @@ namespace PetOwner.Repository.Implementations
 {
 	public class UserRepository : GenericRepository<User>, IUserRepository
 	{
-		public UserRepository(PetOwnerContext _context) : base(_context)
+		private readonly IVipRepository _vipRepository;
+		public UserRepository(PetOwnerContext _context, IVipRepository vipRepository) : base(_context)
 		{
-
+			_vipRepository = vipRepository;
 		}
 
 		public User GetByEmailAndPassword(string email, string password)
@@ -24,15 +25,21 @@ namespace PetOwner.Repository.Implementations
 
 		public User GetUserByEmail(string email)
 		{
-			return _table.Where(x => x.Email == email).FirstOrDefault();
+			//return _table.Where(x => x.Email == email).FirstOrDefault();
+			return _context.Users.Where(x => x.Email == email).FirstOrDefault();
 		}
 
 		public User GetUserWithLevelVip(int id)
 		{
-			User user = _context.Users.Include(x => x.Vip)
+			User user = _context.Users
 				.Include(x => x.Level)
 				.Where(x => x.UserId == id)
 				.FirstOrDefault();
+
+			if(user != null && user.VipId != null)
+			{
+				user.Vip = _vipRepository.Get((int)user.VipId);
+			}
 
 			return user;
 		}
@@ -44,12 +51,5 @@ namespace PetOwner.Repository.Implementations
 			return user;
 		}
 
-		public void InsertUserLevelGroup(User userCreate)
-		{
-			var join = _context.Users.Include(x => x.Level)
-				.Include(y => y.Group).FirstOrDefault();
-
-	
-		}
 	}
 }
