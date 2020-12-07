@@ -13,10 +13,11 @@ namespace PetOwner.Models
 		public string Name { get; set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
-		public int VipId { get; set; }
+		public string Photo { get; set; }
 		public string GoogleId { get; set; }
-		public int LevelId { get; set; }
 		public int GroupId { get; set; }
+		public int? VipId { get; set; }
+		public int LevelId { get; set; }
 		public string FCMToken { get; set; }
 		public virtual Vip Vip { get; set; }
 		public virtual Gamification Level { get; set; }

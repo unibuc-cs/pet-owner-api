@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using PetOwner.Data;
 using PetOwner.Repository.Implementations;
 using PetOwner.Repository.Interfaces;
+using PetOwner.Services.Implementations;
+using PetOwner.Services.Interfaces;
 
 namespace PetOwner
 {
@@ -29,7 +31,8 @@ namespace PetOwner
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
+			services.AddControllers().AddNewtonsoftJson(options =>
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
 
 			services.AddDbContext<PetOwnerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -45,6 +48,10 @@ namespace PetOwner
 			services.AddTransient<IUserAchievementRepository, UserAchievementRepository>();
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IVipRepository, VipRepository>();
+
+			services.AddScoped<IRegisterService, RegisterService>();
+
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
