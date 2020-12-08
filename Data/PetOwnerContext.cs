@@ -13,7 +13,7 @@ namespace PetOwner.Data
 		public DbSet<Activity> Activities { get; set; }
 		public DbSet<Gamification> Gamifications { get; set; }
 		public DbSet<Group> Groups { get; set; }
-		public DbSet<Item> Items { get; set; }
+		public DbSet<Item> Item { get; set; }
 		public DbSet<Pet> Pet { get; set; }
 		public DbSet<PetActivity> PetActivities { get; set; }
 		public DbSet<Tip> Tips { get; set; }

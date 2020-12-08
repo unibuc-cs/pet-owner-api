@@ -35,7 +35,7 @@ namespace PetOwner.Controllers
 			return new string[] { "value1", "value2" };
 		}
 
-		[HttpPost]
+		[HttpPost]	// add vip to user
 		public ActionResult<Vip> Post([FromBody] JObject data)
 		{
 
@@ -67,7 +67,7 @@ namespace PetOwner.Controllers
 
 
 		// GET api/<VipController>
-		[HttpGet("{id}")]
+		[HttpGet("{id}")]	// get user level vip objects for profile screen
 		public ActionResult<UserProfileDTO> Get(int id)
 		{
 			User user = _userRepository.GetUserWithLevelVip(id);
@@ -89,7 +89,7 @@ namespace PetOwner.Controllers
 		}
 
 		// DELETE api/<VipController>/5
-		[HttpDelete("{id}")]
+		[HttpDelete("{id}")]	// delete vip from user
 		public ActionResult Delete(int id)
 		{
 			var user = _context.Users.Where(x => x.VipId == id).FirstOrDefault();
