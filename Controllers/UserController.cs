@@ -56,23 +56,25 @@ namespace PetOwner.Controllers
 		}
 
 		// GET api/<UserController>/5
-		[HttpGet("{id}")]
+		[HttpGet("{id}")]  // get user by user id
 		public ActionResult<User> Get(int id)
 		{
 			return Ok(_userRepository.Get(id));
 		}
 
-		[HttpGet("home/{id}")]
+		[HttpGet("home/{id}")]  // get user with level and vip objects for home screen by user id
 		public ActionResult<UserHomeResponse> GetHome(int id)
 		{
 			User user = _userRepository.GetUserWithLevelVip(id);
+
+			if (user == null) return BadRequest();
 
 			UserHomeResponse response = user.ToUserHome();
 
 			return Ok(response);
 		}
 
-		[HttpGet("leaderboards")]
+		[HttpGet("leaderboards")]	// get  top {size} users  vip/notvip for leaderboards
 		public ActionResult<List<User>> GetLeaderboards([FromBody] JObject data)
 		{
 			int size = Int32.Parse(data["size"].ToString());
@@ -100,7 +102,7 @@ namespace PetOwner.Controllers
 			return Ok(users);
 		}
 
-		// PATCH api/<UserController>/5
+		// PATCH api/<UserController>/5	// update photo, name for user by user id
 		[HttpPatch("{id}")]
 		public ActionResult Patch(int id, [FromBody] JObject data)
 		{
@@ -131,7 +133,7 @@ namespace PetOwner.Controllers
 		}
 
 		// DELETE api/<UserController>/5
-		[HttpDelete("{id}")]
+		[HttpDelete("{id}")]	// delete user
 		public ActionResult Delete(int id)
 		{
 			_userRepository.Delete(_userRepository.Get(id));

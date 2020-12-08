@@ -11,14 +11,20 @@ namespace PetOwner.Mappers
 	{
 		public static UserProfileDTO ToProfile(this User user)
 		{
-			return new UserProfileDTO
+			 var profile = new UserProfileDTO
 			{
 				Name = user.Name,
 				Photo = user.Photo,
 				Tokens = user.Level.Tokens,
 				Level = user.Level.Experience,
-				Vip = user.Vip,
 			};
+
+			if(user.Vip != null)
+			{
+				profile.Vip = user.Vip;
+			}
+
+			return profile;
 		}
 
 	}

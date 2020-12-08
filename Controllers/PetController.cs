@@ -27,18 +27,18 @@ namespace PetOwner.Controllers
 			_userRepository = userRepository;
 		}
 		// GET: api/<PetController>
-		[HttpGet("group/{id}")]
+		[HttpGet("group/{id}")]  // get group pets for group id
 		public ActionResult<List<Pet>> GetPets(int id)
 		{
 			var pets = _context.Pet.Where(x => x.GroupId == id).ToList();
 
-			if(pets != null)
+			if (pets != null)
 			{
 				return Ok(pets);
 			}
 
 			return BadRequest();
-			
+
 		}
 
 		// GET api/<PetController>/5
@@ -48,11 +48,11 @@ namespace PetOwner.Controllers
 			return "value";
 		}
 
-		// POST api/<PetController>
+		// POST api/<PetController>	// post pet and add to group
 		[HttpPost]
 		public ActionResult Post([FromBody] JObject data)
 		{
-			int userid = Int32.Parse(data["userid"].ToString()) ;
+			int userid = Int32.Parse(data["userid"].ToString());
 
 			var value = data["pet"].ToObject<Pet>();
 
@@ -61,9 +61,9 @@ namespace PetOwner.Controllers
 			value.GroupId = _context.Groups
 				.Where(x => x.GroupId == groupid)
 				.FirstOrDefault().GroupId;
-			
+
 			_petRepository.Insert(value);
-			
+
 
 			if (_petRepository.Save())
 			{
@@ -79,10 +79,38 @@ namespace PetOwner.Controllers
 		{
 		}
 
-		// DELETE api/<PetController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
+		[HttpPatch("{petid}")] // update pet
+		public ActionResult Patch(int petid, [FromBody] Pet value)
 		{
+			var petUpdate = _petRepository.Get(petid);
+
+			if (value.PetName != null) petUpdate.PetName = value.PetName;
+
+			if (value.Age != 0) petUpdate.Age = value.Age;
+
+			if (value.Race != null) petUpdate.Race = value.Race;
+
+			if (value.Species != null) petUpdate.Species = value.Species;
+
+			if (value.Weigth != 0) petUpdate.Weigth = value.Weigth;
+
+			if (value.Photo != null) petUpdate.Photo = value.Photo;
+
+			if (_petRepository.Save()) return Ok();
+
+			return BadRequest();
+
+
+		}
+
+
+		[HttpDelete("{petid}")]  // delete pet
+		public ActionResult DeletePet(int petid)
+		{
+
+			_petRepository.Delete(_petRepository.Get(petid));
+
+			return Ok(_petRepository.Save());
 		}
 	}
 }
