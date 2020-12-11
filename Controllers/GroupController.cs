@@ -51,6 +51,19 @@ namespace PetOwner.Controllers
 			return BadRequest();
 		}
 
+		[HttpGet("code")] // get group by invite code
+		public ActionResult<Group> GetByInviteCode([FromBody] JObject data)
+		{
+			var invitecode = data["invitecode"].ToString();
+
+			var group = _groupRepository.GetByInviteCode(invitecode);
+
+			if(group != null) return Ok(group);
+
+			return BadRequest();
+		} 
+
+
 		[HttpGet("{id}/users")] // get group users by group id
 		public ActionResult<List<UserProfileDTO>> GetUsers(int id)
 		{
@@ -133,7 +146,7 @@ namespace PetOwner.Controllers
 				GroupName = "default",
 			};
 
-			_groupRepository.Insert(groupNew);
+			_groupRepository.InsertGroup(groupNew);
 
 			user.Group = groupNew;
 
@@ -157,7 +170,7 @@ namespace PetOwner.Controllers
 				GroupName = "default",
 			};
 
-			_groupRepository.Insert(groupNew);
+			_groupRepository.InsertGroup(groupNew);
 
 			user.Group = groupNew;
 
