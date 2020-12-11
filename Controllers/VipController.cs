@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using PetOwner.Data;
 using PetOwner.DTOs;
+using PetOwner.Helpers;
 using PetOwner.Mappers;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
@@ -42,6 +43,8 @@ namespace PetOwner.Controllers
 			int userid = Int32.Parse(data["id"].ToString());
 			var user = _userRepository.Get(userid);
 
+			if (user.VipId != null) return Ok(new {errocode = Errors.ErrorCode.User_Already_Has_Vip });
+
 
 			var vipCreate = new Vip
 			{
@@ -62,7 +65,7 @@ namespace PetOwner.Controllers
 				return Ok(result);
 			}
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Insert_Vip_Error });
 		}
 
 
@@ -78,7 +81,7 @@ namespace PetOwner.Controllers
 			}
 
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.User_Not_Found });
 
 		}
 
@@ -89,7 +92,7 @@ namespace PetOwner.Controllers
 		}
 
 		// DELETE api/<VipController>/5
-		[HttpDelete("{id}")]	// delete vip from user
+		[HttpDelete("{id}")]	// delete vip from user with vipid
 		public ActionResult Delete(int id)
 		{
 			var user = _context.Users.Where(x => x.VipId == id).FirstOrDefault();
@@ -97,6 +100,10 @@ namespace PetOwner.Controllers
 			if(user != null)
 			{
 				user.VipId = null;
+			}
+			else
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.User_Doesnt_Have_Vip });
 			}
 			
 
@@ -109,7 +116,7 @@ namespace PetOwner.Controllers
 				return Ok();
 			}
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.VipId_Not_Found });
 		}
 	}
 }

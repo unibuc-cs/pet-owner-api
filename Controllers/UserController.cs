@@ -11,6 +11,7 @@ using PetOwner.Mappers;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
 using PetOwner.Services.Interfaces;
+using PetOwner.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,7 +40,7 @@ namespace PetOwner.Controllers
 			if(user != null)
 				return Ok(user.UserId);
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Email_Or_Password_Invalid });
 		}
 
 		[HttpPost("register")]
@@ -52,14 +53,19 @@ namespace PetOwner.Controllers
 				return Ok(userResponse.UserId);
 			}
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Email_Already_Used });
 		}
 
 		// GET api/<UserController>/5
 		[HttpGet("{id}")]  // get user by user id
 		public ActionResult<User> Get(int id)
 		{
-			return Ok(_userRepository.Get(id));
+			var user = _userRepository.Get(id);
+
+			if (user != null) return Ok(user);
+
+
+			return Ok(new {errorcode = Errors.ErrorCode.User_Not_Found });
 		}
 
 		[HttpGet("home/{id}")]  // get user with level and vip objects for home screen by user id
@@ -67,7 +73,7 @@ namespace PetOwner.Controllers
 		{
 			User user = _userRepository.GetUserWithLevelVip(id);
 
-			if (user == null) return BadRequest();
+			if (user == null) return Ok(new {errorcode = Errors.ErrorCode.User_Not_Found });
 
 			UserHomeResponse response = user.ToUserHome();
 
@@ -137,7 +143,11 @@ namespace PetOwner.Controllers
 		public ActionResult Delete(int id)
 		{
 			_userRepository.Delete(_userRepository.Get(id));
-			return Ok(_userRepository.Save());
+
+			if(_userRepository.Save()) return Ok();
+
+			return Ok(new { errorcode = Errors.ErrorCode.User_Not_Found });
+
 		}
 	}
 }

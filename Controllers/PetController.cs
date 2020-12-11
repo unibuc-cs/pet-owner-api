@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using PetOwner.Data;
+using PetOwner.Helpers;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
 
@@ -37,7 +38,7 @@ namespace PetOwner.Controllers
 				return Ok(pets);
 			}
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Group_Pets_Not_Found });
 
 		}
 
@@ -58,6 +59,8 @@ namespace PetOwner.Controllers
 
 			int groupid = _userRepository.Get(userid).GroupId;
 
+			if (groupid == 0) return Ok(new {errorcode = Errors.ErrorCode.Group_Not_Found });
+
 			value.GroupId = _context.Groups
 				.Where(x => x.GroupId == groupid)
 				.FirstOrDefault().GroupId;
@@ -70,7 +73,7 @@ namespace PetOwner.Controllers
 				return Ok();
 			}
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Insert_Pet_To_Group_Failed });
 		}
 
 		// PUT api/<PetController>/5
@@ -83,6 +86,8 @@ namespace PetOwner.Controllers
 		public ActionResult Patch(int petid, [FromBody] Pet value)
 		{
 			var petUpdate = _petRepository.Get(petid);
+
+			if (petUpdate == null) return Ok(new {errorcode = Errors.ErrorCode.Pet_Not_Found });
 
 			if (value.PetName != null) petUpdate.PetName = value.PetName;
 
@@ -98,7 +103,7 @@ namespace PetOwner.Controllers
 
 			if (_petRepository.Save()) return Ok();
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Pet_Update_Failed });
 
 
 		}
@@ -110,7 +115,9 @@ namespace PetOwner.Controllers
 
 			_petRepository.Delete(_petRepository.Get(petid));
 
-			return Ok(_petRepository.Save());
+			if(_petRepository.Save()) return Ok();
+
+			return Ok(new { errorcode = Errors.ErrorCode.Pet_Not_Found });
 		}
 	}
 }
