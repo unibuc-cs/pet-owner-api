@@ -10,6 +10,7 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface IGroupRepository : IGenericRepository<Group>
 	{
-
+		void InsertGroup(Group group);
+		Group GetByInviteCode(string code);
 	}
 }

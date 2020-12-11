@@ -50,6 +50,7 @@ namespace PetOwner
 			services.AddTransient<IVipRepository, VipRepository>();
 
 			services.AddScoped<IRegisterService, RegisterService>();
+			services.AddScoped<IGroupService, GroupService>();
 
 
 		}
