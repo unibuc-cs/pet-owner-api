@@ -61,16 +61,17 @@ namespace PetOwner.Services.Implementations
 			if (user.InviteCode != null)
 			{
 				var groupGet = _groupRepository.GetByInviteCode(user.InviteCode);
-				if (groupGet == null)
-				{
-					userCreate.Group = defaultGroup;
-					_groupRepository.InsertGroup(defaultGroup);
-				}
-				else
+
+				if (groupGet != null)
 				{
 					userCreate.Group = groupGet;
 					userCreate.GroupId = groupGet.GroupId;
 				}
+			}
+			else
+			{
+				userCreate.Group = defaultGroup;
+				_groupRepository.InsertGroup(defaultGroup);
 			}
 
 			_userRepository.Insert(userCreate);
