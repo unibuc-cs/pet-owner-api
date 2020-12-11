@@ -67,6 +67,7 @@ namespace PetOwner.Services.Implementations
 					userCreate.Group = groupGet;
 					userCreate.GroupId = groupGet.GroupId;
 				}
+				else { return false; }
 			}
 			else
 			{
