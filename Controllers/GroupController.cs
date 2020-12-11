@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using PetOwner.Data;
 using PetOwner.DTOs;
+using PetOwner.Helpers;
 using PetOwner.Mappers;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
@@ -48,7 +49,7 @@ namespace PetOwner.Controllers
 			{
 				return Ok(group);
 			}
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Group_Not_Found });
 		}
 
 		[HttpGet("code")] // get group by invite code
@@ -60,7 +61,7 @@ namespace PetOwner.Controllers
 
 			if(group != null) return Ok(group);
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Group_Not_Found });
 		} 
 
 
@@ -71,7 +72,7 @@ namespace PetOwner.Controllers
 
 			if (users == null)
 			{
-				return BadRequest();
+				return Ok(new {errorcode = Errors.ErrorCode.Group_Users_Empty });
 			}
 
 			List<UserProfileDTO> result = new List<UserProfileDTO>();
@@ -100,7 +101,7 @@ namespace PetOwner.Controllers
 
 			var user = _userRepository.Get(userid);
 
-			if (user == null) return BadRequest();
+			if (user == null) return Ok(new {errorcode = Errors.ErrorCode.Add_User_To_Group_Error });
 
 			int oldGroup = user.GroupId;
 
@@ -123,7 +124,7 @@ namespace PetOwner.Controllers
 
 			if (_groupRepository.Save()) return Ok();
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Patch_Group_Name_Failed });
 
 		}
 
@@ -135,35 +136,41 @@ namespace PetOwner.Controllers
 		}
 
 		// DELETE api/<GroupController>/5  
-		[HttpDelete("{id}")]    //	delete group & and default group to user
+		[HttpDelete("{id}")]    //	delete group & and default group to user by groupid
 		public ActionResult Delete(int id)
 		{
 
-			var user = _context.Users.Where(x => x.GroupId == id).FirstOrDefault();
+			var users = _context.Users.Where(x => x.GroupId == id).ToList();
 
 			Group groupNew = new Group
 			{
 				GroupName = "default",
 			};
 
-			_groupRepository.InsertGroup(groupNew);
 
-			user.Group = groupNew;
+			foreach(User user in users) { 
 
-			_context.SaveChanges();
+				_groupRepository.InsertGroup(groupNew);
 
+				user.Group = groupNew;
+
+				_context.SaveChanges();
+
+			}
 			_groupRepository.Delete(_groupRepository.Get(id));
 
 			if (_groupRepository.Save()) return Ok();
 			
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Group_Delete_Failed });
 		}
 
 
-		[HttpDelete("user/{userid}")]
+		[HttpDelete("user/{userid}")] // remove user from group by userid
 		public ActionResult RemoveFromGroup(int userid)
 		{
 			var user = _userRepository.Get(userid);
+
+			if (user == null) return Ok(new { errorcode = Errors.ErrorCode.User_Not_Found });
 
 			Group groupNew = new Group
 			{
@@ -176,7 +183,7 @@ namespace PetOwner.Controllers
 
 			if (_groupRepository.Save()) return Ok();
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Insert_User_To_Group_Failed });
 		}
 
 

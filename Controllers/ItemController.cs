@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetOwner.Data;
+using PetOwner.Helpers;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
 
@@ -39,12 +40,12 @@ namespace PetOwner.Controllers
 		}
 
 		// POST api/<ItemController>
-		[HttpPost("{userid}")]	// add item
+		[HttpPost("{userid}")]	// add item to user
 		public ActionResult Post(int userid, [FromBody] Item value)
 		{
 			var user = _context.Users.Where(x => x.UserId == userid).FirstOrDefault();
 
-			if (user == null) return BadRequest();
+			if (user == null) return Ok(new {errorcode = Errors.ErrorCode.User_Not_Found });
 
 			value.GroupId = user.GroupId;
 
@@ -54,7 +55,7 @@ namespace PetOwner.Controllers
 
 			if (_itemRepository.Save()) return Ok();
 
-			return BadRequest();
+			return Ok(new {errorcode = Errors.ErrorCode.Insert_CostItem_Failed });
 
 		}
 
@@ -70,9 +71,9 @@ namespace PetOwner.Controllers
 		{
 			_itemRepository.Delete(_itemRepository.Get(itemid));
 
-			_itemRepository.Save();
+			if (_itemRepository.Save()) return Ok();
 
-			return Ok();
+			return Ok(new {errorcode = Errors.ErrorCode.CostItem_Not_Found });
 		}
 	}
 }
