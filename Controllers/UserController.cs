@@ -105,7 +105,18 @@ namespace PetOwner.Controllers
 					.ToList();
 			}
 
-			return Ok(users);
+			if(users == null)
+			{
+				return Ok(new {errorcode = Errors.ErrorCode.User_Not_Found});
+			}
+
+			List<UserLeaderboardsDTO> leaderboards = new List<UserLeaderboardsDTO>();
+			foreach(User user in users)
+			{
+				leaderboards.Add(user.ToLeaderboards());
+			}
+
+			return Ok(leaderboards);
 		}
 
 		// PATCH api/<UserController>/5	// update photo, name for user by user id

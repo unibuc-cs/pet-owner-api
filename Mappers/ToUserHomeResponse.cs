@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetOwner.Mappers
 {
-	public static class ToUserHomeRequest
+	public static class ToUserHomeResponse
 	{
 		public static UserHomeResponse ToUserHome(this User user)
 		{
