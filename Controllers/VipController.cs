@@ -39,6 +39,10 @@ namespace PetOwner.Controllers
 		[HttpPost]	// add vip to user
 		public ActionResult<Vip> Post([FromBody] JObject data)
 		{
+			if (data["id"].ToString() == null)
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.Invalid_Json_Object });
+			}
 
 			int userid = Int32.Parse(data["id"].ToString());
 			var user = _userRepository.Get(userid);

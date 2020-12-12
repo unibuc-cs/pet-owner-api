@@ -10,7 +10,7 @@ namespace PetOwner.DTOs
 		public int UserId { get; set; }
 		public string Name { get; set; }
 		public string Photo { get; set; }
-		public int Level { get; set; }
+		public int WeeklyExp { get; set; }
 
 	}
 }

@@ -16,7 +16,7 @@ namespace PetOwner.Mappers
 				Name = user.Name,
 				UserId = user.UserId,
 				Photo = user.Photo,
-				Level = user.Level.Experience,
+				WeeklyExp = user.Level.WeeklyExp,
 			};
 		}
 	}

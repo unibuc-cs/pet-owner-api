@@ -57,6 +57,11 @@ namespace PetOwner.Controllers
 		{
 			var invitecode = data["invitecode"].ToString();
 
+			if(invitecode == null)
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.Invalid_Json_Object });
+			}
+
 			var group = _groupRepository.GetByInviteCode(invitecode);
 
 			if(group != null) return Ok(group);
@@ -97,6 +102,11 @@ namespace PetOwner.Controllers
 		[HttpPatch("{groupid}/user")]    //	add user to group
 		public ActionResult Patch(int groupid, [FromBody] JObject data)
 		{
+			if (data["userid"].ToString() == null)
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.Invalid_Json_Object });
+			}
+
 			int userid = Int32.Parse(data["userid"].ToString());
 
 			var user = _userRepository.Get(userid);
@@ -117,6 +127,11 @@ namespace PetOwner.Controllers
 		public ActionResult UpdateName(int groupid, [FromBody] JObject data)
 		{
 			string groupName = data["groupname"].ToString();
+
+			if (groupName== null)
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.Invalid_Json_Object });
+			}
 
 			var group = _groupRepository.Get(groupid);
 

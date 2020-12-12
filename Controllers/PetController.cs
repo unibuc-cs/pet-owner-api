@@ -53,6 +53,11 @@ namespace PetOwner.Controllers
 		[HttpPost]
 		public ActionResult Post([FromBody] JObject data)
 		{
+			if (data["userid"].ToString() == null)
+			{
+				return Ok(new { errorcode = Errors.ErrorCode.Invalid_Json_Object });
+			}
+
 			int userid = Int32.Parse(data["userid"].ToString());
 
 			var value = data["pet"].ToObject<Pet>();

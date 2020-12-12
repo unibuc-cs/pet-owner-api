@@ -28,7 +28,8 @@ namespace PetOwner.Helpers
 			Insert_Pet_To_Group_Failed,
 			Pet_Update_Failed,
 			Pet_Not_Found,
-			
+			Invalid_Amount_Of_Tokens,
+			Invalid_Json_Object,
 		}
 	}
 }
