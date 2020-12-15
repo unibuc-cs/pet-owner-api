@@ -14,6 +14,7 @@ namespace PetOwner.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class ItemController : ControllerBase
 	{
 		private readonly IItemRepository _itemRepository;

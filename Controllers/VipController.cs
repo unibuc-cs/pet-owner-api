@@ -17,6 +17,7 @@ namespace PetOwner.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class VipController : ControllerBase
 	{
 		private readonly IVipRepository _vipRepository;

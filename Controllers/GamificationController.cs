@@ -13,6 +13,7 @@ namespace PetOwner.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class GamificationController : ControllerBase
 	{
 		private readonly IUserRepository _userRepository;
