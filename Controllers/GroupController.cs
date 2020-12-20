@@ -18,6 +18,7 @@ namespace PetOwner.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class GroupController : ControllerBase
 	{
 		private readonly IGroupRepository _groupRepository;

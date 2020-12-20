@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PetOwner.Data;
+using PetOwner.Helpers;
 using PetOwner.Repository.Implementations;
 using PetOwner.Repository.Interfaces;
 using PetOwner.Services.Implementations;
@@ -51,7 +52,9 @@ namespace PetOwner
 
 			services.AddScoped<IRegisterService, RegisterService>();
 			services.AddScoped<IGroupService, GroupService>();
+			services.AddScoped<ILoginService, LoginService>();
 
+			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
 		}
 
@@ -67,6 +70,7 @@ namespace PetOwner
 
 			app.UseRouting();
 
+			app.UseMiddleware<JWTMiddleware>();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

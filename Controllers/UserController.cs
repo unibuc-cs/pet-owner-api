@@ -25,11 +25,14 @@ namespace PetOwner.Controllers
 		private readonly IRegisterService _registerService;
 		//private readonly GroupRepository _groupRepository;
 		private readonly PetOwnerContext _context;
-		public UserController(IUserRepository userRepository, IRegisterService registerService, PetOwnerContext context)
+		private readonly ILoginService _loginService;
+		public UserController(IUserRepository userRepository,IRegisterService registerService,
+			PetOwnerContext context, ILoginService loginService)
 		{
 			_userRepository = userRepository;
 			_registerService = registerService;
 			_context = context;
+			_loginService = loginService;
 		}
 
 		// GET: api/<UserController>
@@ -37,8 +40,13 @@ namespace PetOwner.Controllers
 		public ActionResult<int> Login(UserLoginRequest userLogin)
 		{
 			var user = _userRepository.Login(userLogin);
-			if(user != null)
-				return Ok(user.UserId);
+			//if(user != null)
+				//return Ok(user.UserId);
+
+			var token = _loginService.Authentificate(userLogin);
+
+			if (token != null)
+				return Ok(token);
 
 			return Ok(new {errorcode = Errors.ErrorCode.Email_Or_Password_Invalid });
 		}
@@ -56,8 +64,10 @@ namespace PetOwner.Controllers
 			return Ok(new {errorcode = Errors.ErrorCode.Email_Already_Used });
 		}
 
+		
 		// GET api/<UserController>/5
 		[HttpGet("{id}")]  // get user by user id
+		[Authorize]
 		public ActionResult<User> Get(int id)
 		{
 			var user = _userRepository.Get(id);
@@ -69,6 +79,7 @@ namespace PetOwner.Controllers
 		}
 
 		[HttpGet("home/{id}")]  // get user with level and vip objects for home screen by user id
+		[Authorize]
 		public ActionResult<UserHomeResponse> GetHome(int id)
 		{
 			User user = _userRepository.GetUserWithLevelVip(id);
@@ -80,7 +91,8 @@ namespace PetOwner.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet("leaderboards")]	// get  top {size} users  vip/notvip for leaderboards
+		[HttpGet("leaderboards")]   // get  top {size} users  vip/notvip for leaderboards
+		[Authorize]
 		public ActionResult<List<User>> GetLeaderboards([FromBody] JObject data)
 		{
 			int size = Int32.Parse(data["size"].ToString());
@@ -121,6 +133,7 @@ namespace PetOwner.Controllers
 
 		// PATCH api/<UserController>/5	// update photo, name for user by user id
 		[HttpPatch("{id}")]
+		[Authorize]
 		public ActionResult Patch(int id, [FromBody] JObject data)
 		{
 			var name = data["name"].ToString();
@@ -145,12 +158,14 @@ namespace PetOwner.Controllers
 
 		// PUT api/<UserController>/5
 		[HttpPut("{id}")]
+		[Authorize]
 		public void Put(int id, [FromBody] string value)
 		{
 		}
 
 		// DELETE api/<UserController>/5
-		[HttpDelete("{id}")]	// delete user
+		[HttpDelete("{id}")]    // delete user
+		[Authorize]
 		public ActionResult Delete(int id)
 		{
 			_userRepository.Delete(_userRepository.Get(id));
