@@ -37,7 +37,7 @@ namespace PetOwner.Controllers
 
 		// GET: api/<UserController>
 		[HttpPost("login")]
-		public ActionResult<int> Login(UserLoginRequest userLogin)
+		public ActionResult Login(UserLoginRequest userLogin)
 		{
 			var user = _userRepository.Login(userLogin);
 			//if(user != null)
@@ -46,19 +46,24 @@ namespace PetOwner.Controllers
 			var token = _loginService.Authentificate(userLogin);
 
 			if (token != null)
-				return Ok(token);
+				return Ok(new {usertoken =  token, userid = user.UserId });
 
 			return Ok(new {errorcode = Errors.ErrorCode.Email_Or_Password_Invalid });
 		}
 
 		[HttpPost("register")]
-		public ActionResult<int> Register(UserRegisterRequest userRegister)
+		public ActionResult Register(UserRegisterRequest userRegister)
 		{
 			bool res = _registerService.Register(userRegister);
 			if (res)
 			{
+				
 				var userResponse = _userRepository.GetByEmailAndPassword(userRegister.Email, userRegister.Password);
-				return Ok(userResponse.UserId);
+				var token = _loginService.Authentificate(new UserLoginRequest {
+					Email = userResponse.Email, 
+					Password = userResponse.Password
+				});
+				return Ok(new { userid = userResponse.UserId, usertoken = token });
 			}
 
 			return Ok(new {errorcode = Errors.ErrorCode.Email_Already_Used });
