@@ -10,6 +10,6 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface IActivityRepository : IGenericRepository<Activity>
 	{
-
+		Activity GetByTitle(string title);
 	}
 }

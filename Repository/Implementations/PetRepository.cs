@@ -14,5 +14,10 @@ namespace PetOwner.Repository.Implementations
 		{
 
 		}
+
+		public List<Pet> GetGroupPets(int groupid)
+		{
+			return _context.Pet.Where(x => x.GroupId == groupid).ToList();
+		}
 	}
 }
