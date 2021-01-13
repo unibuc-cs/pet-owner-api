@@ -10,6 +10,7 @@ namespace PetOwner.Models
 	{
 		[Key]
 		public int ActivityId { get; set; }
+		public string Title { get; set; }
 		public string Description { get; set; }
 		public int ExpPoints { get; set; }
 		public ICollection<PetActivity> PetActivities { get; set; }

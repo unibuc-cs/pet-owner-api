@@ -10,6 +10,6 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface IPetRepository : IGenericRepository<Pet>
 	{
-
+		List<Pet> GetGroupPets(int groupid);
 	}
 }

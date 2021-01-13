@@ -9,16 +9,16 @@ namespace PetOwner.Data
 {
 	public class PetOwnerContext : DbContext
 	{
-		public DbSet<Achievement> Achievements { get; set; }
-		public DbSet<Activity> Activities { get; set; }
+		public DbSet<Achievement> Achievement { get; set; }
+		public DbSet<Activity> Activity { get; set; }
 		public DbSet<Gamification> Gamifications { get; set; }
 		public DbSet<Group> Groups { get; set; }
 		public DbSet<Item> Item { get; set; }
 		public DbSet<Pet> Pet { get; set; }
-		public DbSet<PetActivity> PetActivities { get; set; }
+		public DbSet<PetActivity> PetActivity { get; set; }
 		public DbSet<Tip> Tips { get; set; }
 		public DbSet<User> Users { get; set; }
-		public DbSet<UserAchievement> UserAchievements { get; set; }
+		public DbSet<UserAchievement> UserAchievement { get; set; }
 		public DbSet<Vip> Vip { get; set; }
 
 		public PetOwnerContext(DbContextOptions<PetOwnerContext> options) : base(options)

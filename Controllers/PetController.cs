@@ -21,18 +21,21 @@ namespace PetOwner.Controllers
 		private readonly IPetRepository _petRepository;
 		private readonly PetOwnerContext _context;
 		private readonly IUserRepository _userRepository;
+		private readonly IPetActivityRepository _petActivityRepository;
 
-		public PetController(IPetRepository petRepository, PetOwnerContext context, IUserRepository userRepository)
+		public PetController(IPetRepository petRepository, PetOwnerContext context, IUserRepository userRepository,
+			IPetActivityRepository petActivityRepository)
 		{
 			_petRepository = petRepository;
 			_context = context;
 			_userRepository = userRepository;
+			_petActivityRepository = petActivityRepository;
 		}
 		// GET: api/<PetController>
 		[HttpGet("group/{id}")]  // get group pets for group id
 		public ActionResult<List<Pet>> GetPets(int id)
 		{
-			var pets = _context.Pet.Where(x => x.GroupId == id).ToList();
+			var pets = _petRepository.GetGroupPets(id);
 
 			if (pets != null)
 			{
@@ -45,10 +48,19 @@ namespace PetOwner.Controllers
 
 		// GET api/<PetController>/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public ActionResult<Pet> Get(int id)
 		{
-			return "value";
+			var pet = _petRepository.Get(id);
+			if(pet != null)
+			{
+				return Ok(pet);
+			}
+
+			return Ok();
+			
 		}
+
+
 
 		// POST api/<PetController>	// post pet and add to group
 		[HttpPost]

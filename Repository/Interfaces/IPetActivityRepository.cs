@@ -10,6 +10,7 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface IPetActivityRepository : IGenericRepository<PetActivity>
 	{
-
+		List<PetActivity> GetPetActivities(int petid);
+		PetActivity GetPetActivity(int petid, int activityid);
 	}
 }

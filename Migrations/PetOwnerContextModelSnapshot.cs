@@ -17,7 +17,7 @@ namespace PetOwner.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("PetOwner.Models.Achievement", b =>
                 {
@@ -30,6 +30,9 @@ namespace PetOwner.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ExpPoints")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetTokens")
                         .HasColumnType("int");
 
                     b.HasKey("AchievementId");
@@ -49,6 +52,9 @@ namespace PetOwner.Migrations
 
                     b.Property<int>("ExpPoints")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ActivityId");
 
@@ -183,6 +189,24 @@ namespace PetOwner.Migrations
                     b.HasIndex("ActivityId");
 
                     b.ToTable("PetActivity");
+                });
+
+            modelBuilder.Entity("PetOwner.Models.Tip", b =>
+                {
+                    b.Property<int>("TipId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TipId");
+
+                    b.ToTable("Tips");
                 });
 
             modelBuilder.Entity("PetOwner.Models.User", b =>
