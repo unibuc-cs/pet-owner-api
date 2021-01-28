@@ -10,6 +10,6 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface ITipRepository : IGenericRepository<Tip>
 	{
-
+		List<Tip> GetByTitle(string title);
 	}
 }

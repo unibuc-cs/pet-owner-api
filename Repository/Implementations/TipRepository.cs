@@ -14,5 +14,10 @@ namespace PetOwner.Repository.Implementations
 		{
 
 		}
+
+		public List<Tip> GetByTitle(string title)
+		{
+			return _context.Tips.Where(x => x.Title.Contains(title)).ToList();
+		}
 	}
 }
