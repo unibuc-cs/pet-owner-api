@@ -120,7 +120,7 @@ namespace PetOwner.Controllers
 
 			Delete(oldGroup);
 
-			return Ok();
+			return Ok("User added to new group");
 
 		}
 
@@ -138,7 +138,7 @@ namespace PetOwner.Controllers
 
 			group.GroupName = groupName;
 
-			if (_groupRepository.Save()) return Ok();
+			if (_groupRepository.Save()) return Ok("Update successfully");
 
 			return Ok(new {errorcode = Errors.ErrorCode.Patch_Group_Name_Failed });
 
@@ -175,7 +175,7 @@ namespace PetOwner.Controllers
 			}
 			_groupRepository.Delete(_groupRepository.Get(id));
 
-			if (_groupRepository.Save()) return Ok();
+			if (_groupRepository.Save()) return Ok("Group deleted");
 			
 			return Ok(new {errorcode = Errors.ErrorCode.Group_Delete_Failed });
 		}
@@ -197,7 +197,7 @@ namespace PetOwner.Controllers
 
 			user.Group = groupNew;
 
-			if (_groupRepository.Save()) return Ok();
+			if (_groupRepository.Save()) return Ok("User removed from group");
 
 			return Ok(new {errorcode = Errors.ErrorCode.Insert_User_To_Group_Failed });
 		}

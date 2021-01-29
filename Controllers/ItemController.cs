@@ -54,7 +54,7 @@ namespace PetOwner.Controllers
 
 			_itemRepository.Insert(value);
 
-			if (_itemRepository.Save()) return Ok();
+			if (_itemRepository.Save()) return Ok("Item added");
 
 			return Ok(new {errorcode = Errors.ErrorCode.Insert_CostItem_Failed });
 
@@ -72,7 +72,7 @@ namespace PetOwner.Controllers
 		{
 			_itemRepository.Delete(_itemRepository.Get(itemid));
 
-			if (_itemRepository.Save()) return Ok();
+			if (_itemRepository.Save()) return Ok("Item deleted");
 
 			return Ok(new {errorcode = Errors.ErrorCode.CostItem_Not_Found });
 		}

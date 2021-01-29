@@ -56,7 +56,7 @@ namespace PetOwner.Controllers
 				return Ok(pet);
 			}
 
-			return Ok();
+			return Ok("Pet not found");
 			
 		}
 
@@ -88,7 +88,7 @@ namespace PetOwner.Controllers
 
 			if (_petRepository.Save())
 			{
-				return Ok();
+				return Ok("Pet added to group");
 			}
 
 			return Ok(new {errorcode = Errors.ErrorCode.Insert_Pet_To_Group_Failed });
@@ -119,7 +119,7 @@ namespace PetOwner.Controllers
 
 			if (value.Photo != null) petUpdate.Photo = value.Photo;
 
-			if (_petRepository.Save()) return Ok();
+			if (_petRepository.Save()) return Ok("Update successfully");
 
 			return Ok(new {errorcode = Errors.ErrorCode.Pet_Update_Failed });
 
@@ -133,7 +133,7 @@ namespace PetOwner.Controllers
 
 			_petRepository.Delete(_petRepository.Get(petid));
 
-			if(_petRepository.Save()) return Ok();
+			if(_petRepository.Save()) return Ok("Pet deleted");
 
 			return Ok(new { errorcode = Errors.ErrorCode.Pet_Not_Found });
 		}

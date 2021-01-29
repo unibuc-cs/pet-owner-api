@@ -118,7 +118,7 @@ namespace PetOwner.Controllers
 
 			if (_vipRepository.Save())
 			{
-				return Ok();
+				return Ok("Vip deleted");
 			}
 
 			return Ok(new {errorcode = Errors.ErrorCode.VipId_Not_Found });

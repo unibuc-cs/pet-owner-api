@@ -52,7 +52,7 @@ namespace PetOwner.Controllers
 				return Ok(petactivities);
 			}
 
-			return Ok();
+			return Ok("eroare");
 		}
 
 		// GET api/<ActivityController>/5
@@ -77,14 +77,14 @@ namespace PetOwner.Controllers
 			_activityRepository.Insert(activity);
 			_activityRepository.Save();
 
-			int activityId = _activityRepository.GetByTitle(value.Title).ActivityId;
+			int activityId = _activityRepository.GetByTitleAndDescription(value.Title, value.Description).ActivityId;
 
 			petactivity.ActivityId = activityId;
 			_petActivityRepository.Insert(petactivity);
 
 			if (_petActivityRepository.Save())
 			{
-				return Ok();
+				return Ok(new {petid = value.PetId, activityid = activityId});
 			}
 
 			return Ok("eroare");
@@ -116,7 +116,7 @@ namespace PetOwner.Controllers
 
 			if (_petActivityRepository.Save())
 			{
-				return Ok();
+				return Ok(new {petid = value.PetId, activityid = value.ActivityId });
 			}
 
 			return Ok("eroare");
@@ -143,7 +143,7 @@ namespace PetOwner.Controllers
 
 			if (_activityRepository.Save())
 			{
-				return Ok();
+				return Ok(new {activityid = activityid });
 			}
 
 			return Ok("eroare");
@@ -163,7 +163,7 @@ namespace PetOwner.Controllers
 
 			if (_petActivityRepository.Save())
 			{
-				return Ok();
+				return Ok(new {petid = petid, activityid = activityid });
 			}
 
 			return Ok("eroare");
@@ -180,7 +180,7 @@ namespace PetOwner.Controllers
 
 			if (_activityRepository.Save())
 			{
-				return Ok();
+				return Ok(new {message =  "Successfuly deleted" });
 			}
 
 			return Ok("eroare");
@@ -192,7 +192,7 @@ namespace PetOwner.Controllers
 			_petActivityRepository.Delete(_petActivityRepository.GetPetActivity(petid, activityid));
 			if (_petActivityRepository.Save())
 			{
-				return Ok();
+				return Ok(new { message = "Successfuly deleted" });
 			}
 
 			return Ok("eroare");

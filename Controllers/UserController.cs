@@ -175,7 +175,7 @@ namespace PetOwner.Controllers
 		{
 			_userRepository.Delete(_userRepository.Get(id));
 
-			if(_userRepository.Save()) return Ok();
+			if(_userRepository.Save()) return Ok("User deleted");
 
 			return Ok(new { errorcode = Errors.ErrorCode.User_Not_Found });
 
