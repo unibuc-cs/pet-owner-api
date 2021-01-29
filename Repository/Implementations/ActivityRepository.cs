@@ -19,5 +19,10 @@ namespace PetOwner.Repository.Implementations
 		{
 			return _context.Activity.Where(x => x.Title.Contains(title)).FirstOrDefault();
 		}
+
+		public Activity GetByTitleAndDescription(string title, string description)
+		{
+			return _context.Activity.Where(x => x.Title.Contains(title) && x.Description.Contains(description)).FirstOrDefault();
+		}
 	}
 }

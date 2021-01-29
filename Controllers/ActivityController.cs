@@ -56,10 +56,15 @@ namespace PetOwner.Controllers
 		}
 
 		// GET api/<ActivityController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
+		[HttpGet("activity/{id}")]
+		public ActionResult<Activity> Get(int id)
 		{
-			return "value";
+			var activity = _activityRepository.Get(id);
+
+			if (activity != null)
+				return Ok(activity);
+
+			return Ok("eroare");
 		}
 
 		// POST api/<ActivityController>
@@ -90,9 +95,13 @@ namespace PetOwner.Controllers
 		public ActionResult PostActivity([FromBody] Activity value)
 		{
 			_activityRepository.Insert(value);
-			if (_activityRepository.Save())
+			_activityRepository.Save();
+
+			var insertedActivity = _activityRepository.GetByTitleAndDescription(value.Title, value.Description);
+
+			if (insertedActivity != null)
 			{
-				return Ok();
+				return Ok(new {activityid = insertedActivity.ActivityId });
 			}
 
 			return Ok("eroare");
