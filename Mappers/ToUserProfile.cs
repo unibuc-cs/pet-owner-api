@@ -9,6 +9,7 @@ namespace PetOwner.Mappers
 {
 	public static class ToUserProfile
 	{
+		static int ExpForLevel = 200;
 		public static UserProfileDTO ToProfile(this User user)
 		{
 			 var profile = new UserProfileDTO
@@ -16,7 +17,7 @@ namespace PetOwner.Mappers
 				Name = user.Name,
 				Photo = user.Photo,
 				Tokens = user.Level.Tokens,
-				Level = user.Level.Experience,
+				Level = user.Level.Experience/ExpForLevel,
 			};
 
 			if(user.Vip != null)
