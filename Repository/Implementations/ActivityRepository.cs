@@ -15,9 +15,9 @@ namespace PetOwner.Repository.Implementations
 
 		}
 
-		public Activity GetByTitle(string title)
+		public List<Activity> GetByTitle(string title)
 		{
-			return _context.Activity.Where(x => x.Title.Contains(title)).FirstOrDefault();
+			return _context.Activity.Where(x => x.Title.Contains(title)).ToList();
 		}
 
 		public Activity GetByTitleAndDescription(string title, string description)

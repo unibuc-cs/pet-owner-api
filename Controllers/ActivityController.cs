@@ -67,6 +67,20 @@ namespace PetOwner.Controllers
 			return Ok("eroare");
 		}
 
+		[HttpGet("activity/{title}")]
+		public ActionResult<List<Activity>> GetByTitle(string title)
+		{
+			var activities = _activityRepository.GetByTitle(title);
+
+			if (activities != null)
+				return Ok(activities);
+
+			return Ok("No activity found");
+
+		}
+
+
+
 		// POST api/<ActivityController>
 		[HttpPost("petactivity")]
 		public ActionResult Post([FromBody] PetActivityDTO value)
