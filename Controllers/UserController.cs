@@ -96,7 +96,7 @@ namespace PetOwner.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet("leaderboards")]   // get  top {size} users  vip/notvip for leaderboards
+		[HttpPost("leaderboards")]   // get  top {size} users  vip/notvip for leaderboards
 		[Authorize]
 		public ActionResult<List<User>> GetLeaderboards([FromBody] JObject data)
 		{
