@@ -9,7 +9,7 @@ namespace PetOwner.Mappers
 {
 	public static class ToUserProfile
 	{
-		static int ExpForLevel = 200;
+		public static int ExpForLevel = 200;
 		public static UserProfileDTO ToProfile(this User user)
 		{
 			 var profile = new UserProfileDTO

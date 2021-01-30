@@ -15,7 +15,7 @@ namespace PetOwner.Mappers
 			{
 				Name = user.Name,
 				Photo = user.Photo,
-				Level = user.Level.Experience,
+				Level = user.Level.Experience/ToUserProfile.ExpForLevel + 1,
 				Tokens = user.Level.Tokens,
 
 			};
