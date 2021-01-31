@@ -1,4 +1,5 @@
-﻿using PetOwner.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PetOwner.Data;
 using PetOwner.Models;
 using PetOwner.Repository.Interfaces;
 using PetOwner.Services.Interfaces;
@@ -21,6 +22,15 @@ namespace PetOwner.Repository.Implementations
 		public Group GetByInviteCode(string code)
 		{
 			return _context.Groups.Where(x => x.InviteCode == code).FirstOrDefault();
+		}
+
+		public Group GetGroupWithMembersAndPets(int groupid)
+		{
+			var group = _context.Groups.Where(x => x.GroupId == groupid)
+				.Include(x => x.Pets)
+				.Include(x => x.Users).FirstOrDefault();
+
+			return group;
 		}
 
 		public void InsertGroup(Group group)

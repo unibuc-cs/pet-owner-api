@@ -12,5 +12,6 @@ namespace PetOwner.Repository.Interfaces
 	{
 		void InsertGroup(Group group);
 		Group GetByInviteCode(string code);
+		Group GetGroupWithMembersAndPets(int groupid);
 	}
 }

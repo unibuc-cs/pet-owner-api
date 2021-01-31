@@ -44,7 +44,7 @@ namespace PetOwner.Controllers
 		[HttpGet("{id}")]   // get group by group id
 		public ActionResult<Group> Get(int id)
 		{
-			var group = _groupRepository.Get(id);
+			var group = _groupRepository.GetGroupWithMembersAndPets(id);
 
 			if (group != null)
 			{
