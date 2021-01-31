@@ -91,7 +91,7 @@ namespace PetOwner.Controllers
 			_activityRepository.Insert(activity);
 			_activityRepository.Save();
 
-			int activityId = _activityRepository.GetByTitleAndDescription(value.Title, value.Description).ActivityId;
+			int activityId = _activityRepository.GetByTitleAndDescription(value.Title, value.Description, value.ExpPoints).ActivityId;
 
 			petactivity.ActivityId = activityId;
 			_petActivityRepository.Insert(petactivity);
