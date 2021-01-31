@@ -53,8 +53,8 @@ namespace PetOwner.Controllers
 
 			var vipCreate = new Vip
 			{
-				StartDate = DateTime.UtcNow,
-				EndDate = DateTime.UtcNow.AddDays(30),
+				StartDate = DateTime.Now,
+				EndDate = DateTime.Now.AddDays(30),
 				ExpMultiplier = new decimal(1.5),
 			};
 

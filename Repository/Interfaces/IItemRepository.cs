@@ -10,6 +10,6 @@ namespace PetOwner.Repository.Interfaces
 {
 	public interface IItemRepository : IGenericRepository<Item>
 	{
-
+		List<Item> GetItemsByDate(int groupid, DateTime start, DateTime end);
 	}
 }

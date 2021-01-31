@@ -14,5 +14,11 @@ namespace PetOwner.Repository.Implementations
 		{
 
 		}
+
+		public List<Item> GetItemsByDate(int groupid, DateTime start, DateTime end)
+		{
+
+			return _context.Item.Where(x => x.GroupId == groupid && x.RecordStamp >= start && x.RecordStamp =< end).ToList();
+		}
 	}
 }

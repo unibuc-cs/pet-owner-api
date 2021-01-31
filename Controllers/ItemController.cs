@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using PetOwner.Data;
 using PetOwner.Helpers;
 using PetOwner.Models;
@@ -40,6 +41,21 @@ namespace PetOwner.Controllers
 			return "value";
 		}
 
+		[HttpPost("all/{groupid}")]
+		public ActionResult<List<Item>> GetItems(int groupid, [FromBody] JObject data)
+		{
+			DateTime start = data["start"].ToObject<DateTime>();
+			DateTime end = data["end"].ToObject<DateTime>();
+
+			var items = _itemRepository.GetItemsByDate(groupid, start, end);
+
+			if (items != null)
+				return Ok(items);
+
+			return Ok("No items found");
+
+		}
+
 		// POST api/<ItemController>
 		[HttpPost("{userid}")]	// add item to user
 		public ActionResult Post(int userid, [FromBody] Item value)
@@ -50,7 +66,7 @@ namespace PetOwner.Controllers
 
 			value.GroupId = user.GroupId;
 
-			value.RecordStamp = DateTime.UtcNow;
+			value.RecordStamp = DateTime.Now;
 
 			_itemRepository.Insert(value);
 
