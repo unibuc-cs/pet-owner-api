@@ -35,13 +35,24 @@ namespace PetOwner.Controllers
             return Ok(_tipRepository.Get(id));
         }
 
+        [HttpGet("title/{title}")]
+        public ActionResult<List<Tip>> GetByTitle(string title)
+		{
+            var tip = _tipRepository.GetByTitle(title);
+
+            if (tip != null)
+                return Ok(tip);
+
+            return Ok("Not Found");
+		}
+
         // POST api/<TipController>
         [HttpPost]
         public ActionResult Post([FromBody] Tip value)
         {
             _tipRepository.Insert(value);
             if (_tipRepository.Save())
-                return Ok();
+                return Ok("Tip Created");
 
             return Ok("eroare");
         }
