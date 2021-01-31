@@ -18,6 +18,7 @@ namespace PetOwner.Mappers
 				Photo = user.Photo,
 				Tokens = user.Level.Tokens,
 				Level = user.Level.Experience/ExpForLevel + 1,
+				GroupId = user.GroupId,
 			};
 
 			if(user.Vip != null)

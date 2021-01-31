@@ -13,5 +13,6 @@ namespace PetOwner.DTOs
 		public Vip Vip;
 		public int Level;
 		public int Tokens;
+		public int GroupId;
 	}
 }
