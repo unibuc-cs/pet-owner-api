@@ -20,6 +20,7 @@ namespace PetOwner.Mappers
 				RecurringInterval = pa.RecurringInterval,
 				Description = a.Description,
 				ExpPoints = a.ExpPoints,
+				Title = a.Title,
 			};
 
 			return padto;
