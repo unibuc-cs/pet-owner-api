@@ -141,8 +141,8 @@ namespace PetOwner.Controllers
 		[Authorize]
 		public ActionResult Patch(int id, [FromBody] JObject data)
 		{
-			var name = data["name"].ToString();
-			var photo = data["photo"].ToString();
+			var name = data["name"]?.ToString();
+			var photo = data["photo"]?.ToString();
 
 			var userPatch = _userRepository.Get(id);
 
