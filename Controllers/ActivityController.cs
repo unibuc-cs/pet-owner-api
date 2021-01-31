@@ -111,7 +111,7 @@ namespace PetOwner.Controllers
 			_activityRepository.Insert(value);
 			_activityRepository.Save();
 
-			var insertedActivity = _activityRepository.GetByTitleAndDescription(value.Title, value.Description);
+			var insertedActivity = _activityRepository.GetByTitleAndDescription(value.Title, value.Description, value.ExpPoints);
 
 			if (insertedActivity != null)
 			{
