@@ -23,9 +23,14 @@ namespace PetOwner.Controllers
 
         // GET: api/<TipController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Tip>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var tips = _tipRepository.GetAll();
+
+            if (tips != null)
+                return Ok(tips);
+
+            return Ok("eroare");
         }
 
         // GET api/<TipController>/5
@@ -52,7 +57,11 @@ namespace PetOwner.Controllers
         {
             _tipRepository.Insert(value);
             if (_tipRepository.Save())
-                return Ok("Tip Created");
+			{
+                var id = _tipRepository.GetByTitle(value.Title).FirstOrDefault().TipId;
+                return Ok(new {tipid =  id });
+            }
+                
 
             return Ok("eroare");
         }
